@@ -2,15 +2,20 @@ package ui.functions.insurance;
 
 import com.microsoft.playwright.Page;
 import org.testng.Assert;
+import ui.frameworkconstants.FilePaths;
 import ui.pages.insurance.RegisterPage;
 import ui.pages.insurance.WelcomePage;
+import ui.utils.PropertyUtil;
 import ui.utils.RandomGenerator;
+
+import java.util.Map;
 
 public class Welcome {
 
     WelcomePage welcomePage;
     Page page;
     String password,emailId;
+    Map<String,String> insuranceProperty=PropertyUtil.getInsuranceProperties();
     public Welcome(Page page){
         this.page=page;
         welcomePage=new WelcomePage(page);
@@ -18,8 +23,8 @@ public class Welcome {
 
     public void login() throws InterruptedException {
         Assert.assertTrue(welcomePage.isImageDisplayed());
-        welcomePage.enterEmailAddress(emailId);
-        welcomePage.enterPassword(password);
+        welcomePage.enterEmailAddress(insuranceProperty.get("email"));
+        welcomePage.enterPassword(insuranceProperty.get("password"));
         welcomePage.clickOnLogin();
         Thread.sleep(5000);
     }
@@ -47,6 +52,8 @@ public class Welcome {
         registerPage.enterPassword(password);
         registerPage.enterConfirmPassword(password);
         registerPage.clickOnCreate();
+        PropertyUtil.updatePropertyWithoutEscapeCharacters(FilePaths.INSURANCE_PROPERTY,"email",emailId);
+        PropertyUtil.updatePropertyWithoutEscapeCharacters(FilePaths.INSURANCE_PROPERTY,"password",password);
         Thread.sleep(5000);
     }
 
