@@ -18,5 +18,20 @@ public class RandomGenerator {
     public static String password(){
         return faker.internet().password();
     }
+    public static String phoneNumber(){
+        return faker.phoneNumber().cellPhone();
+    }
+    public static String country(){
+        return faker.country().name();
+    }
+    public static String address(){
+        return faker.address().streetAddress();
+    }
+    public static String pinCode(){
+        return faker.address().zipCode();
+    }
+    public static String city(){
+        return faker.address().city();
+    }
 
 }

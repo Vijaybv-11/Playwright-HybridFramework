@@ -4,24 +4,23 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import lombok.Getter;
+import lombok.Setter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import java.awt.*;
+
 public class PlaywrightFactory {
 
     protected Playwright playwright;
     protected Browser browser;
+    @Setter
+    @Getter
     private  Page page;
     protected LaunchOptions launchOptions;
-
-    public Page getPage(){
-        return  page;
-    }
-    public void setPage(Page page){
-        this.page=page;
-    }
 
     @BeforeClass
     @Parameters({"browserType", "headless", "url"})
@@ -33,7 +32,7 @@ public class PlaywrightFactory {
         launchOptions = new LaunchOptions().setChannel(browserType).setHeadless(headless);
         switch (browserType.toLowerCase()) {
             case "chrome":
-                browser = playwright.chromium().launch(launchOptions.setChannel(browserType));
+                browser = playwright.chromium().launch(launchOptions);
                 break;
             case "firefox":
                 browser = playwright.firefox().launch(launchOptions);
@@ -49,7 +48,10 @@ public class PlaywrightFactory {
         }
 
         page = browser.newPage();
-        page.setViewportSize(1920, 1080);
+        Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
+        int width =(int) screenSize.getWidth();
+        int height =(int) screenSize.getHeight();
+        page.setViewportSize(width, height);
         page.navigate(url);
         page.waitForLoadState();
         setPage(page);
