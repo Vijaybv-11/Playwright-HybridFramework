@@ -14,15 +14,16 @@ public class Welcome {
 
     WelcomePage welcomePage;
     Page page;
-    String password,emailId;
-    Map<String,String> insuranceProperty=PropertyUtil.getInsuranceProperties();
-    public Welcome(Page page){
-        this.page=page;
-        welcomePage=new WelcomePage(page);
+    String password, emailId;
+
+    public Welcome(Page page) {
+        this.page = page;
+        welcomePage = new WelcomePage(page);
     }
 
     public void login() throws InterruptedException {
         Assert.assertTrue(welcomePage.isImageDisplayed());
+        Map<String, String> insuranceProperty = PropertyUtil.getInsuranceProperties();
         welcomePage.enterEmailAddress(insuranceProperty.get("email"));
         welcomePage.enterPassword(insuranceProperty.get("password"));
         welcomePage.clickOnLogin();
@@ -32,7 +33,7 @@ public class Welcome {
     public void register() throws InterruptedException {
         Assert.assertTrue(welcomePage.isImageDisplayed());
         welcomePage.clickOnRegisterButton();
-        RegisterPage registerPage= new RegisterPage(page);
+        RegisterPage registerPage = new RegisterPage(page);
         registerPage.selectTitle("Mr");
         registerPage.enterFirstName(RandomGenerator.firstName());
         registerPage.enterSurName(RandomGenerator.lastName());
@@ -46,17 +47,16 @@ public class Welcome {
         registerPage.enterCountry(RandomGenerator.country());
         registerPage.enterCity(RandomGenerator.city());
         registerPage.enterPostCode(RandomGenerator.pinCode());
-        emailId=RandomGenerator.emailId();
+        emailId = RandomGenerator.emailId();
         registerPage.enterEmail(emailId);
-         password=RandomGenerator.password();
+        password = RandomGenerator.password();
         registerPage.enterPassword(password);
         registerPage.enterConfirmPassword(password);
         registerPage.clickOnCreate();
-        PropertyUtil.updatePropertyWithoutEscapeCharacters(FilePaths.INSURANCE_PROPERTY,"email",emailId);
-        PropertyUtil.updatePropertyWithoutEscapeCharacters(FilePaths.INSURANCE_PROPERTY,"password",password);
+        PropertyUtil.updatePropertyWithoutEscapeCharacters(FilePaths.INSURANCE_PROPERTY, "email", emailId);
+        PropertyUtil.updatePropertyWithoutEscapeCharacters(FilePaths.INSURANCE_PROPERTY, "password", password);
         Thread.sleep(5000);
     }
-
 
 
 }
