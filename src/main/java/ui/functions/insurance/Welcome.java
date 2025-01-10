@@ -15,7 +15,7 @@ public class Welcome {
     WelcomePage welcomePage;
     Page page;
     String password, emailId;
-
+    public static Map<String, String> insuranceProperty = PropertyUtil.getInsuranceProperties();
     public Welcome(Page page) {
         this.page = page;
         welcomePage = new WelcomePage(page);
@@ -23,7 +23,7 @@ public class Welcome {
 
     public void login() throws InterruptedException {
         Assert.assertTrue(welcomePage.isImageDisplayed());
-        Map<String, String> insuranceProperty = PropertyUtil.getInsuranceProperties();
+
         welcomePage.enterEmailAddress(insuranceProperty.get("email"));
         welcomePage.enterPassword(insuranceProperty.get("password"));
         welcomePage.clickOnLogin();

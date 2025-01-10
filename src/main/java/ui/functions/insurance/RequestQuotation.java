@@ -2,8 +2,10 @@ package ui.functions.insurance;
 
 import com.microsoft.playwright.Page;
 import org.testng.Assert;
+import ui.frameworkconstants.FilePaths;
 import ui.pages.insurance.HomePage;
 import ui.pages.insurance.RequestQuotationPage;
+import ui.utils.PropertyUtil;
 
 public class RequestQuotation {
 
@@ -32,7 +34,9 @@ public class RequestQuotation {
         requestQuotationPage.clickOnCalculatePremium();
         Assert.assertTrue(page.locator(requestQuotationPage.getPREMIUM_AMOUNT_TEXT()).isVisible());
         System.out.println(requestQuotationPage.getPremiumAmountText());
-
+        requestQuotationPage.clickOnSaveQuotation();
+        PropertyUtil.updatePropertyWithoutEscapeCharacters(FilePaths.INSURANCE_PROPERTY,"identificationNumber", requestQuotationPage.getIdentificationNumber());
+        page.goBack();
     }
 
 }

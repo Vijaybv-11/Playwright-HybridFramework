@@ -24,6 +24,7 @@ public class RequestQuotationPage {
     private static final String SAVEQUOTATION_BUTTON = "input[value='Save Quotation']";
     @Getter
     private static final String PREMIUM_AMOUNT_TEXT="//p[@id='calculatedpremium']";
+    private static final String IDENTIFICATION_NUMBER="//b[contains(text(), 'Your identification number is :')]/following-sibling::text()";
 
 
     public void selectWindScreenRepair(String yesOrNo) {
@@ -75,7 +76,7 @@ public class RequestQuotationPage {
         page.locator(CALCULATEPREMIUM_BUTTON).click();
     }
 
-    public void clickOnCSaveQuotation() {
+    public void clickOnSaveQuotation() {
         page.locator(SAVEQUOTATION_BUTTON).click();
     }
 
@@ -83,5 +84,8 @@ public class RequestQuotationPage {
         return page.locator(PREMIUM_AMOUNT_TEXT).textContent();
     }
 
+    public String getIdentificationNumber(){
+        return page.locator(IDENTIFICATION_NUMBER).textContent();
+    }
 
 }
